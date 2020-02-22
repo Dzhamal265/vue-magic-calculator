@@ -8,13 +8,13 @@ import { VueComponent } from '@/shims-vue';
 export default class Calculator extends VueComponent {
   formula: string = ''
   result: string = '0'
-  calculatedBuffer: string = ''
   isProccessing: boolean = false
 
   private calculate(): void {
     this.isProccessing = true
     setTimeout(() => {
-      this.result, this.calculatedBuffer = String(eval(this.formula))
+      this.result = String(eval(this.formula))
+      this.formula = this.result
       this.isProccessing = false
     }, 2000)
   }
@@ -22,7 +22,6 @@ export default class Calculator extends VueComponent {
   private clean(): void {
     this.formula = ''
     this.result = '0'
-    this.calculatedBuffer = ''
   }
 
   private inputToFormula(e: Event): void {
@@ -30,7 +29,12 @@ export default class Calculator extends VueComponent {
 
     const target: any = e.target
     const formulaInputValue: string = target.dataset.value
-    if (Object.is(formulaInputValue, '+') || Object.is(formulaInputValue, '-')) this.formula += ` ${formulaInputValue} `
+
+    const signs: string[] = ['+', '-']
+
+    if (signs.includes(this.formula[this.formula.length - 2]) && signs.includes(formulaInputValue)) return
+
+    if (signs.includes(formulaInputValue)) this.formula += ` ${formulaInputValue} `
     else this.formula += formulaInputValue
   }
 
