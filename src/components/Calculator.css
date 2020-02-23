@@ -16,26 +16,46 @@
   overflow: hidden;
 }
 
+button {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: inherit;
+  user-select: none;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
 .btn {
+  outline: none;
+  padding: 20px;
   background-color: #F2F2F2;
   border: 1px solid #999;
-  padding: 20px;
-  user-select: none; 
+  transition: transform 0.09s linear;
+}
+
+@media (min-width: 1200px) {
+  .btn:hover, .btn:focus {
+    transform: scale(1.09);
+  }
+  
+  .btn:active {
+    transform: scale(1);
+  }
 }
 
 .btnOperator {
+  composes: btn;
   background-color: orange;
   color: white;
-  padding: 20px;
-  user-select: none; 
 }
 
 .btnZero {
-  padding: 20px;
-  background-color: #F2F2F2;
-  border: 1px solid #999;
+  composes: btn;
   grid-column: 1 / 4;
-  user-select: none; 
 }
 
 .formula {
